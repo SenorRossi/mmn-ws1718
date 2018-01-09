@@ -1,0 +1,6 @@
+a) API keys are neccessary to identify an application that uses an API
+b) A benefit is that it's possible to identify an appklication.
+	 Another ist that it's less hassle than with password/user pairs.
+c) A problem is that they are often used for authentication and security
+	 purposes, which they are not meant for since they can be easily compromised
+	 or are distributed in client side code in plain text.

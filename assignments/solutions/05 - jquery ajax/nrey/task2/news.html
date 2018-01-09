@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>News Page MMN</title>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./news.css">
+  <script>
+    'use strict';
+    $(document).ready(function() {
+      // put your api key here
+      const apiKey = "put-api-key-here";
+      // url to get all sources
+      const urlSources = `https://newsapi.org/v2/sources?apiKey=${apiKey}&language=en`;
+      // url to get articles from a source
+      const urlHeadlines = `https://newsapi.org/v2/top-headlines?apiKey=${apiKey}&language=en`;
+      const feed = $('#feed');
+      const header = $('#header');
+
+      // utility function to generate a news article
+      function createCard(article) {
+        return `<div class="card">
+                  <img class="card-img-top" src='${article["urlToImage"]}' alt="No image provided">
+                  <div class="card-block">
+                    <hr>
+                    <h4 class="card-title">${article["title"]}</h4>
+                    <hr>
+                    <p class="card-text text-left">${article["description"]}</p>
+                    <a href='${article["url"]}' target="_blank" class="btn btn-primary">Read full article</a>
+                    <hr>
+                    <p class="card-text">Published at ${article["publishedAt"]}</p>
+                    <p class="card-text">By ${article["author"]}</p>
+                  </div>
+                </div>`;
+      }
+
+      // gets articles for a given source name and builds news feed from response
+      function getAndSetHeadlines(source){
+        var url = urlHeadlines + "&sources=" + source;
+        $.get({
+          type: 'get',
+          url: url,
+          data: {},
+          dataType: 'json',
+          success: function(data) {
+            // clear articles
+            feed.html('');
+            // set title for feed
+            header.html(`<h3>News Browser - Showing articles provided by ${source}</h3>`);
+            var articles = data['articles'];
+            // create a card for each article and append to feed container
+            articles.forEach(article => {
+              feed.append(createCard(article));
+            })
+            console.log(data);
+          },
+          error: function(e) {
+            console.log(e);
+          }
+        });
+      }
+
+      // get sources and set initial feed
+      $.get({
+        type: 'get',
+        url: urlSources,
+        data: {},
+        dataType: 'json',
+        success: function(data) {
+          // get sources array from response
+          var sources = data['sources'];
+          var sourcesContainer = $('#sources');
+          // add all sources to left container
+          sources.forEach(source => {
+            var name = source['name'];
+            var id = source['id'];
+            var src = `<div class="source" id="${id}">${name}</div>`;
+            sourcesContainer.append(src);
+          });
+          // add event listener for clicked sources
+          $('.source').click(function(){
+            var element = $(this);
+            var source = element.attr("id");
+            // get and set news feed
+            getAndSetHeadlines(source);
+            // scroll back to top
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+            console.log(source);
+          });
+          // set initial feed from first source
+          getAndSetHeadlines(sources[0]['id']);
+        },
+        error: function(e) {
+          console.log(e);
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+<div id="container" class="container-fluid">
+  <div id="header">
+    <h3>News Browser</h3>
+  </div>
+  <div class="row">
+    <div id="sources" class="col-4"></div>
+    <div id="feed" class="col-8">
+    </div>
+  </div>
+</div>
+</body>
+<footer>
+  <h1><a href="https://newsapi.org/" class="white">powered by https://newsapi.org/</a></h1>
+  <p class="white">Tutorial project for the lecture Online Multimedia at LMU Munich - Medieninformatik</p>
+</footer>
+</html>
