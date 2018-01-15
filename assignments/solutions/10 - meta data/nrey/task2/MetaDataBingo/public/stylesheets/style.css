@@ -1,0 +1,44 @@
+.flex-container{
+  display: inline-flex;
+  flex-wrap: wrap;
+}
+
+.card{
+  margin: 16px auto;
+  transition: ease-in-out;
+}
+
+h1{
+  color: lightblue;
+  font-weight: bold;
+}
+
+.hide{
+  display:none;
+}
+
+.flex-item{
+  border-radius: 5px;
+  box-shadow: 0 0 2px 1px darkgrey;
+  width: 18%;
+  height: 50px;
+  margin: 10px auto;
+  font-size: 1.2em;
+  background-color: #dedede;
+  padding: 15px 5px;
+}
+
+.green{
+  background-color: green;
+  color:white;
+}
+
+.red{
+  background-color: red;
+  color:white;
+}
+
+html{
+  color: #555;
+  text-align: center;
+}

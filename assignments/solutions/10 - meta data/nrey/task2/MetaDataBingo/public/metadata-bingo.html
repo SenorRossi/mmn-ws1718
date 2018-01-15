@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Meta Data Bingo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+
+  </style>
+</head>
+<body>
+<header>
+  Meta Data Bingo!
+</header>
+<div id="container">
+  <div class="card hide" id="question"><h3></h3></div>
+  <div class="card hide" id="notification"><h1>BINGO!</h1></div>
+  <div class="card" id="startContainer"><button id="start">New game</button></div>
+
+  <div class="card hide" id="bingo"></div>
+</div>
+<link rel="stylesheet" href="http://www.medien.ifi.lmu.de/lehre/ws1617/mmn/uebung/material/assignments.css">
+<link rel="stylesheet" href="./stylesheets/style.css">
+<script>
+
+  /**
+   * modified from https://bost.ocks.org/mike/shuffle/ (Fisher-Yates Shuffle).
+   * this will allow you to call someArray.shuffle(). The shuffling is in place and also the shuffled Array is returned,
+   * you you can method-chain this call.
+   *
+   */
+  Array.prototype.shuffle = function() {
+    var m = this.length, t, i;
+
+    // While there remain elements to shuffle…
+    while (m) {
+
+      // Pick a remaining element…
+      i = Math.floor(Math.random() * m--);
+
+      // And swap it with the current element.
+      t = this[m];
+      this[m] = this[i];
+      this[i] = t;
+    }
+    return this; // to allow method chaining.
+  };
+
+  const card = document.getElementById('bingo');
+  const question = document.getElementById('question');
+  const note = document.getElementById('notification');
+  const button = document.getElementById('start');
+  const startContainer = document.getElementById('startContainer');
+  var currentQuestion;
+  var template;
+  var lines = [[],[],[],[],[],[],[],[],[],[]];
+
+  const initialTemplate = [
+    {'answer':'Essence', 'question': 'Content consists of meta data and …'},
+    {'answer':'Content','question': 'Essence and meta-data combined are called …'},
+    {'answer':'Embedded meta data', 'question': 'You can save meta-data in databases and separate files. Or you handle it differently. How do you call this different approach?'},
+    {'answer':'MPEG-7', 'question': 'A standard to describe multimedia contents'},
+    {'answer':'ID3', 'question': 'A standard to save metadata to mp3 files'},
+    {'answer':'Spatial Segment', 'question': 'A still-region in an image is in any case a ...'},
+    {'answer':'Segment graph', 'question': 'You can relate different segments and visualize the result. How do you call this visualization?'},
+    {'answer':'high-level unstructured meta data', 'question': 'In which category of meta-data does the album cover art fit?'},
+    {'answer':'high-level structured meta data', 'question': 'In which category of meta-data does „song title“ fit?'},
+    {'answer':'low level meta data', 'question': 'In which category of meta-data does „bitrate“ fit?'},
+    {'answer':'GraceNote', 'question': 'A famous database to retrieve meta-data about music'},
+    {'answer':'Feature extraction', 'question': 'How do you call a process to automatically generate low-level meta-data?'},
+    {'answer':'Fingerprinting', 'question': 'What is the name of the procedure with which you can recognize music short samples?'},
+    {'answer':'Temporal segment', 'question': 'A sample of a song can be seen as ...'},
+    {'answer':'EXIF', 'question': 'What is the most common format to store meta data inside images?'},
+    {'answer':'Dublin Core', 'question': 'A standard that consists of 15 meta-data elements and that is targeted at books, magazines and journals.'},
+    {'answer':'RDF', 'question': 'A framework to describe web resources'},
+    {'answer':'Shape descriptor', 'question': 'The representation of a geometric object'},
+    {'answer':'Automatic score transcription', 'question': 'How do you call the process to identify parts of a song or its instruments algorithmically?'},
+    {'answer':'Shazam', 'question': 'A company that offers automatic music tagging'},
+    {'answer':'Moving Pictures Expert Group', 'question': 'Which organization created MPEG-7?'},
+    {'answer':'Still Regions', 'question': 'You can split up areas of pictures into ...'},
+    {'answer':'Structural relation', 'question': 'You can associate segments to one another. How do you call this association?'},
+    {'answer':'above', 'question': 'An example for a „spatial structural relation“'},
+    {'answer':'Resource', 'question': 'Which term matches this definition: Anything that can be identified by a URI'}
+  ];
+
+  function newGame(){
+    // reset fields to initial state
+    lines = [[],[],[],[],[],[],[],[],[],[]];
+    card.innerHTML = "";
+    startContainer.className = "hide card";
+    note.className = "hide card";
+
+    // copy given template to use for a game
+    template = initialTemplate.slice(0);
+
+    // set the board..
+    createLayout();
+
+    // add the click event listeners for the answer items
+    var items = document.getElementsByClassName('flex-item');
+    for(var i = 0; i < items.length; i++){
+      items[i].addEventListener('click', checkAnswer, false);
+    }
+
+    // make bingo lines from layout
+    assembleLines();
+
+    // get the first question
+    getQuestion();
+    question.classList = "card";
+
+    // show the created layout
+    card.classList = "card";
+  }
+
+  function createLayout(){
+
+    // new container for answer boxes
+    var itemsContainer = document.createElement('div');
+    itemsContainer.classList.add('flex-container');
+
+    // add answer boxes based on shuffled template array
+    template.shuffle().forEach(item => {
+      var itemContainer = document.createElement('div');
+      var text = document.createTextNode(item['answer']);
+      itemContainer.classList.add('flex-item');
+      itemContainer.appendChild(text);
+      itemsContainer.appendChild(itemContainer);
+    });
+    card.appendChild(itemsContainer);
+  };
+
+  function getQuestion(){
+    // if no questions are left prompt user for new try
+    if(template.length == 0){
+      question.firstChild.innerHTML = "No questions left - try again!";
+      startContainer.classList = "card";
+      return;
+    }
+
+    // get random index in template array
+    var it = Math.floor(Math.random() * (template.length));
+
+    // set next question
+    currentQuestion = template[it];
+    question.firstChild.innerHTML = currentQuestion['question'];
+
+    // remove the question from the template array
+    template.splice(it,1);
+  }
+
+  function checkAnswer(event){
+    var element = event.target;
+
+    // check if clicked answer is same as that in currentQuestion and add color code
+    var status = currentQuestion.answer === element.innerHTML;
+    var color = status? "green":"red";
+    element.classList.add(color);
+
+    // prevent an element from being clicked twice
+    element.removeEventListener('click', checkAnswer, false);
+
+    // check for bingo
+    checkState();
+  }
+
+  // assembles bingo lines from created layout
+  function assembleLines(){
+    var model = document.getElementsByClassName('flex-item');
+    for(i = 0; i < model.length; i++){
+      if(0 <= i && i < 5)
+        lines[0].push(model[i]);
+      else if(5 <= i && i < 10)
+        lines[1].push(model[i]);
+      else if(10 <= i && i < 15)
+        lines[2].push(model[i]);
+      else if(15 <= i && i < 20)
+        lines[3].push(model[i]);
+      else if(20 <= i && i < 25)
+        lines[4].push(model[i]);
+      if(i%5 == 0)
+        lines[5].push(model[i]);
+      else if(i%5 -1 == 0)
+        lines[6].push(model[i]);
+      else if(i%5 - 2 == 0)
+        lines[7].push(model[i]);
+      else if(i%5 - 3 == 0)
+        lines[8].push(model[i]);
+      else if(i%5 - 4 == 0)
+        lines[9].push(model[i]);
+    }
+  }
+
+  function checkState(){
+    var line;
+    var complete;
+    // iterate over all lines
+    for(i = 0; i < lines.length; i++){
+      complete = true;
+      line = lines[i];
+      // iterate all elements in a line and check if they are wrong/not clicked yet
+      for(j = 0; j < line.length; j++){
+        console.log(line[j]);
+        if(!line[j].className.includes('green')){
+          complete = false;
+        }
+      }
+      // if all elements in a line are right end game
+      if(complete){
+        // show bingo
+        note.classList = "card";
+        // show new game button
+        startContainer.classList = "card";
+        question.classList.add('hide');
+        // we want to keep showing the final board but remove click event listeners
+        var items = document.getElementsByClassName('flex-item');
+        for(i = 0; i < items.length; i++){
+          items[i].removeEventListener('click', checkAnswer, false);
+        }
+        return;
+      }
+    }
+    // if no line is complete get the next question
+    getQuestion();
+  }
+
+  window.onload = function(){
+    button.addEventListener('click', newGame, false);
+  };
+
+</script>
+</body>
+</html>
