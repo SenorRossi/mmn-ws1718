@@ -1,0 +1,23 @@
+a) What are the reasons for which YouTube made the switch to HTML5?
+- now supports ABR which is essential to QoE of YouTube
+- native to modern browsers and no need to use 3rd party plugins
+- less and less support by Adobe itself
+
+b) Why does Adaptive Bitrate (ABR) reduce buffering?
+- mechanism detects the download rate for a client and sends data packets in higher/lesser quality depending 
+on if the bitrate of the content is more/less than the download rate => content can be displayed faster because the time to
+wait until data packets arrive is reduced
+
+c) Why is reducing buffering desirable
+- higher QoE
+- more immersive if content is displayed smoothly without need to wait
+- less and less users are willing to wait for content to download if it takes to long
+
+d) What does “heavily congested networks” mean?
+- high data traffic
+- throughput limits of network are reached
+- a lot of clients are using the network at the same time
+=> e.g. 3G/4G mobile networks
+
+e) What does this article have to do with DASH?
+- DASH is a standard that sends data streams as packets over HTTP and implements ABR 

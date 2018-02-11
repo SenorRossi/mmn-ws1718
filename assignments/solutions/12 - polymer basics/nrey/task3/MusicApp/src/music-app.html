@@ -1,0 +1,47 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../bower_components/paper-item/paper-icon-item.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/app-storage/app-localstorage/app-localstorage-document.html">
+
+<dom-module id="music-app">
+  <template>
+
+    <app-drawer-layout>
+      <app-drawer>
+        <app-toolbar>
+          <paper-tabs attr-for-selected="page" selected="{{selectedPage}}">
+            <paper-tab page="artists">Artists</paper-tab>
+            <paper-tab page="playlists">Playlists</paper-tab>
+          </paper-tabs>
+        </app-toolbar>
+        <paper-listbox>
+          <paper-icon-item></paper-icon-item>
+        </paper-listbox>
+      </app-drawer>
+      <app-header-layout>
+        <app-header></app-header>
+        <iron-pages attr-for-selected="page" selected="{{selectedPage}}">
+          <div page="artists">Artists</div>
+          <div page="playlists">Playlists</div>
+        </iron-pages>
+      </app-header-layout>
+
+    </app-drawer-layout>
+
+  </template>
+  <script>
+
+    class MusicApp extends Polymer.Element {
+      static get is(){ return 'music-app'; }
+    }
+    customElements.define('music-app', MusicApp);
+  </script>
+</dom-module>

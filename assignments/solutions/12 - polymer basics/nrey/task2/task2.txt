@@ -1,0 +1,36 @@
+RAIL Model
+
+Describes the aspects of an apps lifecycle, Response, Animation, Idle, Load, and how performance and user experience fits into them.
+A guideline that describes user behavior concerning delays while interacting or loading an app and the timeframe to implement tasks
+so as not to compromise QoE.
+
+PRPL
+
+Describes a pattern of how to build und bundle resources for an app to meet optimum performance criteria when loading pages.
+It addresses the problem on how resources are loaded and cached.
+
+Progressive Web App (PWA)
+
+Traditional web sites that might appear to the client like a native or mobile application and aim to combine web pages with the 
+benefits of mobile apps concerning resource bundling and caching.
+A concept that tries to mimic the performance of native apps and make the development and maintainence of web apps more efficient.
+
+Critical Rendering Path
+The steps that a browser must execute to render a page, i.e. requesting resources, parsing resources, building DOM, CSSDOM
+and applying javascript.
+The CRP addresses the problem on how resources should be served to provide for a minimum time to render critical content in a 
+client browser and how the resources are dependend upon each other.
+
+
+AMPs
+
+Pages that are built on a derived format of HTML that includes restrictions on how external resources can be used and loaded
+and on how render/parser blocking resources are handled. The again address the topic on how to build web pages based on optimum
+performance issues.
+
+App Shell
+
+The minimum required CSS, HTML and JS that is needed to reliably and instantly load an app on a users screen. The minimum resources
+are built to be cached on don't contain dynamic content that needs to be loaded from a server every time => better QoE
+
+
