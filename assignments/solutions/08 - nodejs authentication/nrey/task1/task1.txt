@@ -1,0 +1,19 @@
+Screen Scraping
+
+1.
+
+Screen scraping is the process of collecting screen display data from one application and translating it so that another application can display it. This is normally done to capture data from a legacy application in order to display it using a more modern user interface.
+Screen scraping usually refers to a legitimate technique used to translate screen data from one application to another. It is sometimes confused with content scraping, which is the use of manual or automatic means to harvest content from a website without the approval of the website owner.
+Screen scraping is sometimes referred to as terminal emulation.
+
+Screen Scraping vs. Web Scraping!!!
+
+A web scraper is an API or tool to extract data from a web site. Companies like Amazon AWS and Google provide web scraping tools, services and public data available free of cost to end users. Newer forms of web scraping involve listening to data feeds from web servers. For example, JSON is commonly used as a transport storage mechanism between the client and the web server.
+
+2.
+Screen scraping used to be applied heavily in the finance industry to simplify and digitalize data, but today is also used for
+verifing the optical output of GUI to the expected result or in Optical Character Recognition of AI systems.
+
+3.
+No, noot without permission of the website owner.
+

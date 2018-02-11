@@ -1,0 +1,9 @@
+Which files contain essence?
+.xhtml and image(s)
+
+Which files contain meta-data?
+mimetype and package.opf
+
+In GoogleDoc/package.opf you see a lot of XML tags that start with dc: – what is this?
+=> The Dublin Core Meta Data description standard
+

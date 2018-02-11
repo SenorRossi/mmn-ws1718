@@ -1,0 +1,15 @@
+a) Can you use MPEG 7 for analog media? Why (not)?
+Yes since the MPEG7 Standard is completely detached from the standard an format of the content it describes.
+It would be possible to just print the MPEG7 XMLs an ship them with e.g. an analogue photo.
+
+b) Which has better compression: MPEG 4 or MPEG 7?
+Since MPEG7 is no comppression standard the comparison is more or less meaningless...
+Or you could say that content in MPEG4 has a better compression since MPEG7 isn't bound to compression.
+Of course it's possible to minify XMLs but that doesn't account for much...
+
+c) What are potential reasons why we do not encounter MPEG 7 more often
+ (e.g. for media search)?
+Storing and maintaining XMLs is to much effort and uses to many resources.
+Serving XMLs as meta-data needs client side efforts to parse and process.
+Probably most media doesn't have MPEG-7 XMLs attached to them since it takes
+a lot of resources to produce them.  
